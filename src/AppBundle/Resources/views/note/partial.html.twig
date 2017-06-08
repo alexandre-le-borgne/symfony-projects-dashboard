@@ -1,0 +1,17 @@
+<div class="panel">
+    <div class="panel-heading">{{ note.title }}</div>
+    <div class="panel-body note"></div>
+</div>
+
+<script type="text/javascript" src="https://cdn.rawgit.com/showdownjs/showdown/1.6.3/dist/showdown.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var converter = new showdown.Converter({
+                noHeaderId: true
+            }),
+            text = "{{ note.content|e('js') }}",
+            html = converter.makeHtml(text);
+
+         $('.note').html(html);
+    });
+</script>

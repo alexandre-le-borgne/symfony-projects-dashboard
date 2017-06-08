@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+}
+html {
+    display: block;
+    font-size: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+body {
+    display: block;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #676a6c;
+    overflow-x: hidden;
+    margin: 0;
+    background: #f4f6fa;
+}
+.navbar-fixed-side {
+    border-radius: 0;
+}
+#nav .navbar-header {
+    background-color: #0e9aef;
+}
+#nav .navbar-brand {
+    color: #fff;
+    font-size: 13px;
+    text-shadow: none;
+    font-weight: bold;
+}
+#nav .navbar {
+    background: #2f4050
+}
+#nav .navbar,
+#nav .navbar-collapse {
+    border: 0;
+}
+#nav .navbar-nav {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#nav .dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 0;
+}
+#nav .dropdown-menu li > a {
+    padding-left: 50px;
+}
+#nav .dropdown-menu li.divider {
+    margin: 0;
+    width: 50%;
+    position: absolute;
+    left: 50px;
+    background-color: #82909e;
+}
+#nav li.dropdown {
+    background: #2f4050;
+}
+#nav li.dropdown > a{
+     text-transform: inherit;
+}
+#nav li > a {
+    box-shadow: none;
+    color: #9ea6b9!important;
+    font-weight: 600;
+    padding: 10px 20px 10px 25px;
+    background: #2f4050 none;
+    text-shadow: none;
+    border: 0;
+    font-size: 13px;
+}
+
+#nav li.active > a {
+    background-color: #293846;
+}
+#header {
+    background-color: #ffffff;
+    padding: 0 25px 20px 25px;
+    border-bottom: 1px solid #e7eaec !important;
+}
+#header h2 {
+    font-weight: 100;
+    font-size: 24px;
+}
+#header .breadcrumb {
+    margin-bottom: 0;
+}
+#content {
+    background: #f4f6fa;
+}
+.wrapper-content {
+    padding: 20px 10px 40px;
+}
+.wrapper {
+    padding: 0 20px;
+}
+.panel {
+    border-radius: 0;
+}
+.panel-heading {
+    background-color: #ffffff!important;
+    border-color: #e7eaec!important;
+    background-image: none!important;
+    border-style: solid solid none!important;
+    border-width: 2px 0 0!important;
+}
+.panel-body {
+    background-color: #f3f6fb!important;
+    border-color: #e7eaec!important;
+    border-image: none!important;
+    border-style: solid solid none!important;
+    border-width: 1px 0!important;
+}
+.overflow-ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}
+.panel-content:not(:first-child) {
+    margin-top: 15px;
+}
+.note {
+    overflow: auto;
+    max-height: 800px;
+}
+.note img {
+    max-width: 100%;
+}
+.CodeMirror, .CodeMirror-scroll {
+    max-height: 800px;
+}
+.ace-editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}

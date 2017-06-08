@@ -1,0 +1,72 @@
+{% extends 'layout.html.twig' %}
+
+{% block headerTitle %}
+    Projects
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li class="active">Projects</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="wrapper-content">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Search by name/tags</label>
+                        <input id="search" type="text" placeholder="Rechercher..." class="form-control">
+                    </div>
+                    <a href="{{ path('project_insert') }}" class="btn btn-primary btn-block">Add new project</a>
+                </div>
+                <div id="projects" class="col-lg-10">
+                    {% for project in projects %}
+                        <div class="col-lg-3 project">
+                            {% include '@App/projects/partial.html.twig' with {'project': project} only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        (function ($) {
+            $('#search').keyup(function () {
+                var values = $(this).val();
+                if (values === "") {
+                    $('#projects').find('.project').each(function () {
+                        $(this).show();
+                    });
+                }
+                else {
+                    values = values.toLowerCase().split(' ');
+
+                    $('#projects').find('.project').each(function () {
+                        var terms = [$(this).find('.name').text()];
+                        $(this).find('.tag').each(function () {
+                            terms.push($(this).text());
+                        });
+                        var found = 0;
+                        for (var i in values) {
+                            for (var j in terms) {
+                                if (terms[j].toLowerCase().search(values[i]) > -1) {
+                                    ++found;
+                                }
+                            }
+                        }
+                        if (found < values.length) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    });
+
+                }
+            });
+        })(jQuery);
+    </script>
+{% endblock %}

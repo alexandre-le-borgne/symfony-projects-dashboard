@@ -1,0 +1,70 @@
+{% import _self as current_template %}
+{% macro menuItem(name, url, icon, separator, subitems) %}
+    {% import _self as current_template %}
+    {% spaceless %}
+        {% set subitems = subitems|default({}) %}
+        {% set icon = icon|default %}
+        {% set separator = separator|default(false) %}
+        {% set currentUrl = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+        {% set isActive = currentUrl == url %}
+
+        {% if separator %}
+            <li role="separator" class="divider"></li>
+        {% else %}
+            {% if subitems|length > 0 %}
+                <li class="dropdown">
+                    <a href="{{ url }}" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="false">
+                        {% if icon %}
+                            <span class="glyphicon glyphicon-{{ icon }}" aria-hidden="true"></span>
+                        {% endif %}
+                        {{ name|trans() }}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for item in subitems %}
+                            {{ current_template.menuItem(item[0]|default, item[1]|default, item[2]|default, item[3]|default) }}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li{% if isActive %} class="is-active"{% endif %}>
+                    <a href="{{ url }}">
+                        {% if icon %}
+                            <span class="glyphicon glyphicon-{{ icon }}" aria-hidden="true"></span>
+                        {% endif %}
+                        {{ name|trans() }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+<nav class="navbar navbar-default navbar-fixed-side">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('index') }}">Dashboard</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                {{ current_template.menuItem('Projets', path('index'), 'home') }}
+                {{ current_template.menuItem('Tags', path('index'), 'tags') }}
+                {#{{ current_template.menuItem('Dropdown', path('index'), '', false, [#}
+                    {#['Sub 1', path('index'), 'home'],#}
+                    {#['', '', '', true],#}
+                    {#['Sub 2', path('index'), 'tags']#}
+                {#]) }}#}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

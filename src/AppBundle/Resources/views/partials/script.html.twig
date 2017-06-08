@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="{{ path('script_get', {id: script.id, pid:script.pid}) }}" class="name">
+            {{ script.title }}
+        </a>
+        <div class="pull-right">
+
+            <a href="{{ path('script_update', {id: script.id, pid:script.pid}) }}" title="Update">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a href="{{ path('script_delete', {id: script.id, pid:script.pid}) }}" title="Delete"
+               onclick="return confirm('Are you sure?')">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
+        {% if script.tags|default %}
+            <div class="panel-content">
+                {% for tag in script.tags %}
+                    <span class="label label-primary tag">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

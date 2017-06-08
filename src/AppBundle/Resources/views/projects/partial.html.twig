@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="{{ path('project_get', {id: project.id}) }}" class="name">
+            {{ project.name }}
+        </a>
+        <div class="pull-right">
+
+            <a href="{{ path('project_update', {id: project.id}) }}" title="Update">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a href="{{ path('project_delete', {id: project.id}) }}" title="Delete"
+               onclick="return confirm('Are you sure?')">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
+        {% if project.link %}
+            <div class="overflow-ellipsis panel-content">
+                <a href="{{ project.link }}" target="_blank">
+                    {{ project.link }}
+                </a>
+            </div>
+        {% endif %}
+        {% if project.repository %}
+            <div class="panel-content">
+                <input class="form-control" type="text" value="{{ project.repository }}"
+                       readonly/>
+            </div>
+        {% endif %}
+        {% if project.tags|default %}
+            <div class="panel-content">
+                {% for tag in project.tags %}
+                    <span class="label label-primary tag">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

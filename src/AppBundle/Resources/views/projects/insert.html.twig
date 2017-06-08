@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block javascripts %}
+    {% include '@App/projects/form.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="{{ asset('assets/vendor/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css') }}"/>
+{% endblock %}
+
+{% block headerTitle %}
+    New Project
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li><a href="{{ path('projects') }}">Projects</a></li>
+    <li class="active">New project</li>
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Create"
+           class="btn btn-default pull-right"/>
+    {{ form_end(form) }}
+{% endblock body %}

@@ -1,0 +1,151 @@
+{% extends 'layout.html.twig' %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="{{ asset('assets/vendor/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css') }}"/>
+{% endblock %}
+
+{% block headerTitle %}
+    {{ project.name }}
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li><a href="{{ path('projects') }}">Projects</a></li>
+    <li class="active">{{ project.name }}</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="wrapper-content">
+            <div class="row">
+                <div class="col-lg-3">
+                    {#<div class="form-group">#}
+                        {#<label>Recherche par nom/tags</label>#}
+                        {#<input id="search" type="text" placeholder="Rechercher..." class="form-control">#}
+                    {#</div>#}
+                    {% include '@App/projects/partial.html.twig' with {'project': project} only %}
+                    <div class="form-group">
+                        <a href="{{ path('note_insert', {pid: project.id}) }}" class="btn btn-primary btn-block">Add new
+                            note</a>
+                        <a href="{{ path('script_insert', {pid: project.id}) }}" class="btn btn-primary btn-block">Add new
+                            script</a>
+                    </div>
+                    <div class="panel panel-default">
+                        {#<div class="panel-body">#}
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for note in project.notes %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('note_get', {pid: project.id, id: note.id}) }}">{{ note.title }}</a>
+                                        {% if note.tags|default %}
+                                            <div>
+                                                {% for tag in note.tags %}
+                                                    <span class="label label-primary tag">{{ tag.name }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <a href="{{ path('note_update', {pid: project.id, id: note.id}) }}" title="Update">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a>
+                                        <a href="{{ path('note_delete', {pid: project.id, id: note.id}) }}" title="Delete"
+                                           onclick="return confirm('Are you sure?')">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% for script in project.scripts %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('script_get', {pid: project.id, id: script.id}) }}">
+                                            {{ script.title }}
+                                        </a>
+                                        {% if script.tags|default %}
+                                            <div>
+                                                {% for tag in script.tags %}
+                                                    <span class="label label-primary tag">{{ tag.name }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <a href="{{ path('script_update', {pid: project.id, id: script.id}) }}" title="Update">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a>
+                                        <a href="{{ path('script_delete', {pid: project.id, id: script.id}) }}" title="Delete"
+                                           onclick="return confirm('Are you sure?')">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        {#</div>#}
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    {% block project_center %}
+                        {% set readMe = getReadMe(project.notes) %}
+                        {% if readMe %}
+                            {% include '@App/note/partial.html.twig' with {'note': readMe} only %}
+                        {% else %}
+                            <a href="{{ path('note_insert', {pid: project.id, readme: true}) }}"
+                               class="btn btn-primary btn-block">Add a README.md</a>
+                        {% endif %}
+                        {#{% include '@App/note/update.html.twig' %}#}
+                    {% endblock %}
+                </div>
+                {#<div class="col-lg-2">#}
+
+                {#<div class="col-lg-3 project">#}
+                {#<div class="panel panel-default">#}
+                {#<div class="panel-heading">#}
+                {#<a href="{{ path('project_get', {id: project.id}) }}" class="name">#}
+                {#{{ project.name }}#}
+                {#</a>#}
+                {#<div class="pull-right">#}
+                {#<a href="{{ path('project_update', {id: project.id}) }}">#}
+                {#<i class="glyphicon glyphicon-edit"></i>#}
+                {#</a>#}
+                {#</div>#}
+                {#</div>#}
+                {#<div class="panel-body">#}
+                {#{% if project.link %}#}
+                {#<div class="overflow-ellipsis panel-content">#}
+                {#<a href="{{ project.link }}" target="_blank">#}
+                {#{{ project.link }}#}
+                {#</a>#}
+                {#</div>#}
+                {#{% endif %}#}
+                {#{% if project.repository %}#}
+                {#<div class="panel-content">#}
+                {#<input class="form-control" type="text" value="{{ project.repository }}"#}
+                {#readonly/>#}
+                {#</div>#}
+                {#{% endif %}#}
+                {#{% if project.tags|default %}#}
+                {#<div class="panel-content">#}
+                {#{% for tag in project.tags %}#}
+                {#<span class="label label-primary tag">{{ tag.name }}</span>#}
+                {#{% endfor %}#}
+                {#</div>#}
+                {#{% endif %}#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+{% endblock body %}

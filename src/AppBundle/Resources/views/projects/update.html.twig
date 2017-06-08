@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block javascripts %}
+    {% include '@App/projects/form.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="{{ asset('assets/vendor/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.min.css') }}"/>
+{% endblock %}
+
+{% block headerTitle %}
+    Update project {{ project.name }}
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li><a href="{{ path('projects') }}">Projects</a></li>
+    <li><a href="{{ path('project_get', {id: project.id}) }}">{{ project.name }}</a></li>
+    <li class="active">Update</li>
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Update"
+           class="btn btn-default pull-right"/>
+    {{ form_end(form) }}
+{% endblock body %}

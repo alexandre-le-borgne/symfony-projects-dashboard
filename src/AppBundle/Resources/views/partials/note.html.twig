@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="{{ path('note_get', {id: note.id, pid:note.pid}) }}" class="name">
+            {{ note.title }}
+        </a>
+        <div class="pull-right">
+
+            <a href="{{ path('note_update', {id: note.id, pid:note.pid}) }}" title="Update">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a href="{{ path('note_delete', {id: note.id, pid:note.pid}) }}" title="Delete"
+               onclick="return confirm('Are you sure?')">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
+        {% if note.tags|default %}
+            <div class="panel-content">
+                {% for tag in note.tags %}
+                    <span class="label label-primary tag">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

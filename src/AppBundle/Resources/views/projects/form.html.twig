@@ -1,0 +1,17 @@
+<script type="text/javascript"
+        src="{{ asset('assets/vendor/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('js/form-tags.js') }}"></script>
+<script>
+    (function ($) {
+        Pace.once('done', function () {
+            var source;
+            {% if project is defined %}
+            source = {{ getUsedTags(project.tags)|json_encode|raw }};
+            {% else %}
+            source = {{ getUsedTags()|json_encode|raw }};
+            {% endif %}
+            $('.tokenfield').formTags(source);
+        });
+    }(jQuery));
+</script>

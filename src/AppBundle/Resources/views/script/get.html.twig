@@ -1,0 +1,18 @@
+{% extends '@App/projects/get.html.twig' %}
+
+{% block headerTitle %}
+    {{ script.title }}
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li><a href="{{ path('projects') }}">Projects</a></li>
+    <li><a href="{{ path('project_get', {id: project.id}) }}">{{ project.name }}</a></li>
+    <li class="active">{{ script.title }}</li>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block project_center %}
+   {% include '@App/script/partial.html.twig' with {script: script} only %}
+{% endblock %}

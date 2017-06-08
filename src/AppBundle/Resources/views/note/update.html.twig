@@ -1,0 +1,42 @@
+{% extends '@App/projects/get.html.twig' %}
+
+{% block headerTitle %}
+   Update note {{ note.title }}
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li><a href="{{ path('projects') }}">Projects</a></li>
+    <li><a href="{{ path('project_get', {id: project.id}) }}">{{ project.name }}</a></li>
+    <li><a href="{{ path('note_get', {pid: project.id, id: note.id}) }}">{{ note.title }}</a></li>
+    <li class="active">Update</li>
+{% endblock %}
+
+{% block javascripts %}
+    {% include '@App/note/form.html.twig' %}
+{% endblock %}
+
+{% block project_center %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Update"
+           class="btn btn-default pull-right"/>
+    {{ form_end(form) }}
+
+    <script type="text/javascript">
+        $(function () {
+            var element = $('.simplemde');
+            var simplemde = new SimpleMDE({
+                element: element[0],
+                autosave: {
+                    enabled: true,
+                    delay: 10000,
+                    uniqueId: {{ note.id }}
+                }
+            });
+            element.closest('form').submit(function () {
+                element.val(simplemde.value());
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'layout.html.twig' %}
+
+{% block headerTitle %}
+    Index
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li class="active">Index</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="wrapper-content">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label>Search by name/tags</label>
+                        <input id="search" type="text" placeholder="Rechercher..." class="form-control">
+                    </div>
+                </div>
+            </div>
+            <h3>Projects</h3>
+            <div id="projects" class="col-lg-12">
+                {% for project in projects %}
+                    <div class="col-lg-3 project">
+                        {% include '@App/projects/partial.html.twig' with {'project': project} only %}
+                        {#{% include '@App/partials/panel.html.twig' with {'type': 'project', 'item': project} only %}#}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h3>Notes</h3>
+            <div id="notes" class="col-lg-12">
+                {% for note in notes %}
+                    <div class="col-lg-2 note">
+                        {% include '@App/partials/note.html.twig' with {'note': note} only %}
+                    </div>
+                {% endfor %}
+            </div>
+            <h3>Scripts</h3>
+            <div id="scripts" class="col-lg-12">
+                {% for script in scripts %}
+                    <div class="col-lg-2 script">
+                        {% include '@App/partials/script.html.twig' with {'script': script} only %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        (function ($) {
+            $('#search').keyup(function () {
+                var values = $(this).val();
+                $.post('{{ path('index') }}', {search: values.toLowerCase().split(' ')}, function (data) {
+                    $('#projects').empty();
+                    $('#notes').empty();
+                    $('#scripts').empty();
+                    var i;
+                    for(i in data['projects']) {
+                        $('#projects').append($('<div class="col-lg-3 project"></div>').append(data['projects'][i]));
+                    }
+                    for(i in data['notes']) {
+                        $('#notes').append($('<div class="col-lg-2 note"></div>').append(data['notes'][i]));
+                    }
+                    for(i in data['scripts']) {
+                        $('#scripts').append($('<div class="col-lg-2 script"></div>').append(data['scripts'][i]));
+                    }
+                });
+//                if (values === "") {
+//                    $('#projects').find('.project').each(function () {
+//                        $(this).show();
+//                    });
+//                }
+//                else {
+//                    values = values.toLowerCase().split(' ');
+//
+//                    $('#projects').find('.project').each(function () {
+//                        var terms = [$(this).find('.name').text()];
+//                        $(this).find('.tag').each(function () {
+//                            terms.push($(this).text());
+//                        });
+//                        var found = 0;
+//                        for (var i in values) {
+//                            for (var j in terms) {
+//                                if (terms[j].toLowerCase().search(values[i]) > -1) {
+//                                    ++found;
+//                                }
+//                            }
+//                        }
+//                        if (found < values.length) {
+//                            $(this).hide();
+//                        }
+//                        else {
+//                            $(this).show();
+//                        }
+//                    });
+//
+//                }
+            });
+        })(jQuery);
+    </script>
+{% endblock %}

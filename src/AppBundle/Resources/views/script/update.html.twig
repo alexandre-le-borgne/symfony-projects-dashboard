@@ -1,0 +1,33 @@
+{% extends '@App/projects/get.html.twig' %}
+
+{% block headerTitle %}
+   Update script {{ script.title }}
+{% endblock %}
+
+{% block headerBreadcrumb %}
+    <li><a href="{{ path('projects') }}">Projects</a></li>
+    <li><a href="{{ path('project_get', {id: project.id}) }}">{{ project.name }}</a></li>
+    <li><a href="{{ path('script_get', {pid: project.id, id: script.id}) }}">{{ script.title }}</a></li>
+    <li class="active">Update</li>
+{% endblock %}
+
+{% block javascripts %}
+    {% include '@App/script/form.html.twig' %}
+{% endblock %}
+
+{% block project_center %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Update"
+           class="btn btn-default pull-right"/>
+    {{ form_end(form) }}
+
+    <script type="text/javascript">
+        $(function () {
+            var editor = ace.edit($(".aceeditor")[0]);
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/php");
+        });
+    </script>
+{% endblock %}
